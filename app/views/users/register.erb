@@ -1,0 +1,65 @@
+	<% if @errors %>
+		<h3>Error:</h3>	
+		<ul class="errors">	
+			<% @errors.each do |attr, value| %>
+				<li><%= attr %> - <%= value %></li>	
+			<% end %>
+		</ul>	
+		<br/>	
+	<% end %>
+
+	<h3>Register as a new user</h3>
+	<% form_tag :action=>"register" do %>
+		<table border="1">		
+			<tr>
+				<td>First Name:*</td>
+				<td><%= text_field :user, :first_name %></td>
+			</tr>
+			<tr>
+				<td>Last Name:*</td>
+				<td><%= text_field :user, :last_name %></td>
+			</tr>
+			<tr>
+				<td>Email:*</td>
+				<td><%= text_field :user, :email %></td>
+			</tr>
+			<tr>
+				<td>Password:*</td>
+				<td><%= password_field "user", :password %></td>
+			</tr>
+			<tr>
+				<td>Password Again:*</td>
+				<td><%= password_field "user", :password_confirmation %></td>
+			</tr>
+			<tr>
+				<td>Street:*</td>
+				<td><%= text_field :address, :street %></td>
+			</tr>
+			<tr>
+				<td>Suburb:*</td>
+				<td><%= text_field :address, :suburb %></td>
+			</tr>
+			<tr>
+				<td>State:*</td>
+				<td><%= select("state", "state_id", State.find(:all).collect {|s| [ s.name, s.id ] }, {:prompt => 'Select a State'})
+%></td>
+			</tr>
+			<tr>
+				<td>Postcode:</td>
+				<td><%= text_field :address, :postcode %></td>
+			</tr>
+			<tr>
+				<td>Landline:</td>
+				<td><%= text_field :user, :landline %></td>
+			</tr>
+			<tr>
+				<td>Mobile:</td>
+				<td><%= text_field :user, :mobile %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag "Register", {:name=>"register"}%> - <%= submit_tag "Cancel", {:name=>"cancel"}%></td>
+			</tr>
+			
+		</table>
+	<% end %>

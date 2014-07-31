@@ -1,0 +1,110 @@
+	<h3>Surgeon's detail</h3>
+	<table border="1">
+		<tr>
+			<td>First Name:</td>
+			<td><%= @surgeon.first_name %></td>
+		</tr>
+		<tr>
+			<td>Last Name:</td>
+			<td><%= @surgeon.last_name %></td>
+		</tr>
+		<tr>
+			<td>Password:</td>
+			<td>Now Showing</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><%= @surgeon.email %></td>
+		</tr>
+		<tr>
+			<td>Landline:</td>
+			<td><%= @surgeon.landline %></td>
+		</tr>
+		<tr>
+			<td>Mobile:</td>
+			<td><%= @surgeon.mobile %></td>
+		</tr>
+		<tr>
+			<td>Street:</td>
+			<td><%= @address.street %></td>
+		</tr>
+		<tr>
+			<td>Suburb:</td>
+			<td><%= @address.suburb %></td>
+		</tr>
+		<tr>
+			<td>State:</td>
+			<td><%= @state.name %></td>
+		</tr>
+		<tr>
+			<td>Postcode:</td>
+			<td><%= @address.postcode %></td>
+		</tr>
+		<tr>
+			<td>Description:</td>
+			<td><%= @surgeon.description %></td>
+		</tr>
+		<tr>
+			<td>Manage your surgeon items:</td>
+			<td><%= link_to "Manage", :controller=>"surgeon_item", :id=>@surgeon.id %></td>
+		</tr>
+		<tr>
+			<td>Actions:</td>
+			<td>
+				<%= link_to "Edit", :action=>"edit", :id=>@surgeon.id %> |
+				<%= link_to "Calendar", :controller=>"mycalendar", :action=>"display_for_surgeon" %>
+			</td>
+		</tr>
+	</table>
+
+	<br/>
+	<h3>You are booked by</h3>
+
+	<% if @mydates.count > 0 %>
+		<% @mydates.each do |date| %>
+			<% timeslots = date.mytimeslots %>
+
+			<% if timeslots.count > 0 %>
+				<h4><%= date.date_slug.gsub("_", "/") %></h4>
+			<% end %>
+
+			<table border="1">
+				<tr>						
+					<th>Time</th>
+					<th>Booker</th>
+					<th>Description</th>
+					<th>Last Updated</th>
+					<th>Completed</th>
+					<th>Actions</th>			
+				</tr>
+
+				<% i = 0 %>
+				<% timeslots.each do |timeslot| %>
+					<% css_class = get_tr_css(i) %>
+					<tr class="<%= css_class %>">
+						<td><%= timeslot.time_slug %> - <%= timeslot.time_slug.to_i + 1 %></td>
+						<td>
+							<% booker = timeslot.booker %>
+							<% person_name = booker.first_name + " " + booker.last_name %>							
+							<% if timeslot.booker_type == "User" %>
+								<%= link_to person_name, :action=>"display_user", :user_id=>booker.id %>						
+							<% else %>
+								<%= link_to person_name, :action=>"index" %>
+							<% end %>
+						</td>
+						<td><%= timeslot.content %></td>
+						<td><%= timeslot.updated_at %></td>
+						<td><%= timeslot.completed %></td>
+						<td>
+							<%= link_to "Cancel", :controller=>"mycalendar", :action=>"surgeon_cancel", :timeslot_id=>timeslot.id, :surgeon_id=>@surgeon.id %>
+						</td>
+					</tr>
+					<% i += 1 %>
+				<% end %>
+			</table>
+			<br/>
+		<% end %>
+	<% else %>
+		<p>You have not been booked yet!</p>
+	<% end %>
+

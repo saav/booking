@@ -1,0 +1,125 @@
+<h3>Display</h3>
+	<table border="1">
+		<tr>		
+			<td>ID:</td>
+			<td><%= @surgeon.id %></td>
+		</tr>
+		<tr>		
+			<td>First Name:</td>
+			<td><%= @surgeon.first_name %></td>
+		</tr>
+		<tr>		
+			<td>Last Name:</td>
+			<td><%= @surgeon.last_name %></td>
+		</tr>
+		<tr>		
+			<td>Email:</td>
+			<td><%= @surgeon.email %></td>
+		</tr>
+		<tr>		
+			<td>Landline:</td>
+			<td><%= @surgeon.landline %></td>
+		</tr>
+		<tr>		
+			<td>Mobile:</td>
+			<td><%= @surgeon.mobile %></td>
+		</tr>
+	</table>
+
+	<br/>
+	<h3>Surgeon Items</h3>
+	<ul>
+		<% @surgeon.surgeonItems.each do |item| %>
+			<li>Name: <%= item.name %>; Description: <%= item.description %>; Cost:<%= item.cost %></li>
+		<% end %>
+	</ul>
+
+	<br/><br/><br/><br/>
+	<h3>Surgeon's calendar - (viewing: <%= @year %>/<%= sprintf("%02d", @month) %>/<%= sprintf("%02d", @day) %>)</h3>
+	<br/>
+	<div class="left">
+		<%= 
+			calendar(:year => Time.now.year, :month => Time.now.month) do |d|
+		  		link_to d.mday, :action=>"display_for_surgeon", :year=>d.year, :month=>d.month, :day=>d.day, :surgeon_id=>@surgeon.id 
+				end
+		%>
+	</div>
+
+
+	<div class="right">
+		<% form_for :date, :url=>{:action=>"save_surgeon_timeslots"} do |date_form| %>
+			<%= date_form.hidden_field  :year, :value=>@year %>			
+			<%= date_form.hidden_field  :month, :value=>@month %>
+			<%= date_form.hidden_field  :day, :value=>@day %>
+
+			<table border="1">
+				<tr>
+					<th>Time</th>
+					<th>Booked By</th>
+					<th>Book</th>
+					<th>Actions</th>		
+					<th>Description</th>
+				</tr>			
+
+				<% i = 0 %>
+				<% @timeslots.each do |timeslot| %>
+					<% if i % 2 == 0 %>
+						<% css_class = "tr_light" %>				
+					<% else %>
+						<% css_class = "tr_dark" %>
+					<% end %>
+
+					<% fields_for :timeslot, timeslot do |timeslot_form| %>
+						<% i = i + 1 %>
+						<%= hidden_field_tag "orders[#{timeslot.time_slug}]", i %>	
+	
+						<tr class="<%= css_class %>">			
+							<td><%= timeslot.time_slug %> - <%= timeslot.time_slug.to_i + 1%></td>
+							<td>
+								<% if timeslot.id != nil %>
+									<%= timeslot.booker.email %>
+								<% else %>							
+						
+								<% end %>
+							</td>
+
+							<td>
+								<% if timeslot.id != nil %>
+									<%= check_box "timeslot", "available", {:name=>"timeslots[#{timeslot.time_slug}]", :checked=>"checked", :disabled=>true }, "0" %>
+								<% else %>
+									<%= check_box "timeslot", "available", :name=>"timeslots[#{timeslot.time_slug}]", :checked=>"unchecked" %>
+								<% end %>
+							</td>
+
+							<td>
+								<% if timeslot.id != nil %>
+									<%= link_to "Cancel", :action=>"surgeon_cancel", :timeslot_id=>timeslot.id, :surgeon_id=>@surgeon.id %> |
+									<%= link_to "Edit", :action=>"surgeon_edit" %>
+								<% else %>
+
+								<% end %>
+							</td>
+
+							<td>
+								<% if timeslot.available == true %>	
+									<%= timeslot_form.text_area :content, :size=>"60x5", :name=>"contents[#{timeslot.time_slug}]" %>
+								<% else %>
+									<%= timeslot_form.text_area :content, :size=>"60x5", :disabled=>"disabled" %>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
+				
+			<br/>
+			<%= submit_tag "Submit", :name=>"submit" %> | 
+			<%= submit_tag "Cancel", :name=>"cancel" %> 
+			<br/>
+		<% end %>
+	</div>
+
+
+
+
+

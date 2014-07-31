@@ -1,0 +1,24 @@
+	<h3>Edit your timeslot</h3>
+	<% form_for :timeslot, @timeslot, :url=>{:action=>"user_edit", :timeslot_id=>@timeslot_id, :surgeon_id=>@surgeon_id} do |f| %>
+		<table border="1">
+			<tr>
+				<td>Time:</td>
+				<td><%= @timeslot.time_slug %> - <%= @timeslot.time_slug.to_i + 1 %></td>
+			</tr>
+			<tr>
+				<td>Description:</td>
+				<td><%= f.text_area :content %></td>
+			</tr>
+			<tr>
+				<td>Updated At:</td>
+				<td><%= @timeslot.updated_at %></td>
+			</tr>
+			<tr>
+				<td>Actions:</td>
+				<td><%= submit_tag "Submit", :name=>"submit" %> | <%= submit_tag "Delete", :name=>"delete" %> | <%= submit_tag "Cancel", :name=>"cancel" %></td>
+			</tr>
+			
+		<table>
+
+	<% end %>
+

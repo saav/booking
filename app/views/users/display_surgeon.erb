@@ -1,0 +1,67 @@
+<h3>Surgeon's detail</h3>
+	<table border="1">
+		<tr>
+			<td>First Name:</td>
+			<td><%= @surgeon.first_name %></td>
+		</tr>
+		<tr>
+			<td>Last Name:</td>
+			<td><%= @surgeon.last_name %></td>
+		</tr>
+		<tr>
+			<td>Password:</td>
+			<td>Now Showing</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><%= @surgeon.email %></td>
+		</tr>
+		<tr>
+			<td>Landline:</td>
+			<td><%= @surgeon.landline %></td>
+		</tr>
+		<tr>
+			<td>Mobile:</td>
+			<td><%= @surgeon.mobile %></td>
+		</tr>
+		<tr>
+			<td>Street:</td>
+			<td><%= @address.street %></td>
+		</tr>
+		<tr>
+			<td>Suburb:</td>
+			<td><%= @address.suburb %></td>
+		</tr>
+		<tr>
+			<td>State:</td>
+			<td><%= @state.name %></td>
+		</tr>
+		<tr>
+			<td>Postcode:</td>
+			<td><%= @address.postcode %></td>
+		</tr>
+		<tr>
+			<td>Description:</td>
+			<td><%= @surgeon.description %></td>
+		</tr>
+	</table>
+
+	<br/>
+	<h3>Surgeon's items</h3>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Cost</th>
+		</tr>				
+
+		<% @items.each do |item| %>
+			<tr>			
+				<td><%= item.id%></td>
+				<td><%= item.name %></td>
+				<td><%= item.description %></td>
+				<td><%= item.cost %></td>
+			</tr>
+		<% end %>
+	</table>

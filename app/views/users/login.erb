@@ -1,0 +1,27 @@
+	<h3>Please login</h3>
+	<% form_for :user, :url=>{:action=>"login"} do |f| %>	
+		<table>
+			<tr>
+				<td>Email: </td>
+				<td><%= f.text_field :email %></td>
+			</tr>
+			<tr>
+				<td>Password: </td>
+				<td><%= f.password_field :password %></td>
+			</tr>
+			<tr>
+				<td>Type: </td>
+				<td><%= select_tag "user_type", "<option value='user'>User</option><option value='surgeon'>Surgeon</option>" %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag "Login", :name=>"login" %></td>
+			</tr>
+		</table>
+	<% end %>
+
+	<br/>
+	<p><%= link_to  "Register as a new user", :controller=>"users", :action=>"register"%></p>
+
+	<br/>
+	<p><%= link_to  "Register as a new surgeon", :controller=>"surgeons", :action=>"register"%></p>

@@ -1,0 +1,47 @@
+	<h3>Display</h3>
+	<table border="1">
+		<tr>		
+			<td>ID:</td>
+			<td><%= @surgeon.id %></td>
+		</tr>
+		<tr>		
+			<td>First Name:</td>
+			<td><%= @surgeon.first_name %></td>
+		</tr>
+		<tr>		
+			<td>Last Name:</td>
+			<td><%= @surgeon.last_name %></td>
+		</tr>
+		<tr>		
+			<td>Email:</td>
+			<td><%= @surgeon.email %></td>
+		</tr>
+		<tr>		
+			<td>Landline:</td>
+			<td><%= @surgeon.landline %></td>
+		</tr>
+		<tr>		
+			<td>Mobile:</td>
+			<td><%= @surgeon.mobile %></td>
+		</tr>
+	</table>
+
+	<h3>Surgeon Items</h3>
+	<ul>
+		<% @surgeon.surgeonItems.each do |item| %>
+			<li>Name: <%= item.name %>; Description: <%= item.description %>; Cost:<%= item.cost %></li>
+		<% end %>
+	</ul>
+
+	<br/>
+	<% form_for :surgeon, :url=>{ :controller=>"users", :action=>"confirm_booking" } do |f| %>
+		<%= f.hidden_field :surgeon_id, :value=>@surgeon.id %>
+		
+		
+		<h3>Description:</h3>
+		<%= text_area :booking, :description, :cols=>40, :rows=>15 %>
+		
+		<br/>		
+		<%= submit_tag "Confirm", :name=>"confirm" %>
+		<%= submit_tag "Cancel", :name=>"cancel" %>
+	<% end %>

@@ -1,0 +1,92 @@
+	<h3>User's detail</h3>
+	<table border="1">
+		<tr>
+			<td>First Name:</td>
+			<td><%= @user.first_name %></td>
+		</tr>
+		<tr>
+			<td>Last Name:</td>
+			<td><%= @user.last_name %></td>
+		</tr>
+		<tr>
+			<td>Password:</td>
+			<td>Not Showing</td>
+		</tr>
+		<tr>
+			<td>Email:</td>
+			<td><%= @user.email %></td>
+		</tr>
+		<tr>
+			<td>Landline:</td>
+			<td><%= @user.landline %></td>
+		</tr>
+		<tr>
+			<td>Mobile:</td>
+			<td><%= @user.mobile %></td>
+		</tr>	
+		<tr>
+			<td>Street:</td>
+			<td><%= @address.street %></td>
+		</tr>
+		<tr>
+			<td>Suburb:</td>
+			<td><%= @address.suburb %></td>
+		</tr>
+		<tr>
+			<td>State:</td>
+			<td><%= @state.name %></td>
+		</tr>
+		<tr>
+			<td>Postcode:</td>
+			<td><%= @address.postcode %></td>
+		</tr>
+		<tr>
+			<td>Actions:</td>
+			<td>
+				<%= link_to "Edit", :action=>"edit", :id=>@user.id %> | 
+				<%= link_to "New Booking", :controller=>"surgeons", :action=>"display_surgeons"%> 
+			</td>
+		</tr>
+	</table>
+
+	
+
+	<br/><br/>
+	<h3>Your booking details</h3>
+	<% if @timeslots && @timeslots.count > 0 %>
+		<table border="1">
+			<tr>
+				<th>Timeslot ID</th>
+				<th>Surgeon</th>
+				<th>Booking Time (yyyy/mm/dd, h - h)</th>
+				<th>Description</th>
+				<th>Actions</th>
+			</tr>
+
+			<% i = 0 %>
+			<% @timeslots.each do |timeslot| %>
+				<% css_class = get_tr_css(i) %>
+
+				<% mydate = timeslot.mydate %>
+				<% surgeon = timeslot.mydate.surgeon %>
+				<tr class="<%= css_class %>">
+					<td><%= timeslot.id %></td>
+					<td>
+						<% person_name = surgeon.first_name + " " + surgeon.last_name %>
+						<%= link_to person_name, :action=>"display_surgeon", :surgeon_id=>surgeon.id %>
+					</td>
+					<td>
+						<%= mydate.date_slug.tr("_", "/") %>,  
+						<%= timeslot.time_slug %> - <%= timeslot.time_slug.to_i + 1 %>
+					</td>
+					<td><%= timeslot.content %></td>
+					<td> 
+						<%= link_to "Cancel", :action=>"cancel_booking", :timeslot_id=>timeslot.id %>
+					</td>					
+				</tr>
+				<% i += 1 %>
+			<% end %>
+		</table>
+	<% else %>
+		<p>You don't have any booking yet! -- Book here!</p>
+	<% end %>

@@ -1,0 +1,74 @@
+	<h3>Edit This Surgeon</h3>
+	<% form_for @surgeon, :url=>{:action=>"edit"} do |surgeon_form| %>
+		<%= surgeon_form.hidden_field :surgeon_id, :value=>@surgeon.id %>		
+
+		<table>
+			<tr>
+				<td>First Name:*</td>
+				<td><%= surgeon_form.text_field :first_name %></td>
+			</tr>
+			<tr>
+				<td>Last Name:*</td>
+				<td><%= surgeon_form.text_field :last_name %></td>
+			</tr>
+
+			<tr>
+				<td>Email:*</td>
+				<td><%= surgeon_form.text_field :email, :disabled=>"disabled" %></td>
+			</tr>
+			<tr>
+				<td>New Password:*</td>
+				<td><%= password_field_tag :password %></td>
+			</tr>
+			<tr>
+				<td>Confirm New Password:*</td>
+				<td><%= password_field_tag :confirmation_password %></td>
+			</tr>
+			<tr>
+				<td>Landline:</td>
+				<td><%= surgeon_form.text_field :landline %></td>
+			</tr>
+			<tr>
+				<td>Mobile:</td>
+				<td><%= surgeon_form.text_field :mobile %></td>
+			</tr>
+			<tr>
+				<td>Description:</td>
+				<td><%= surgeon_form.text_area :description %></td>
+			</tr>
+
+
+			<% address = @surgeon.address %>
+			<% if address %>
+				<% surgeon_form.fields_for :address, address do |address_fields| %>
+					<%= address_fields.hidden_field :address_id, :value=>address.id %>							
+					<tr>
+						<td>Street:*</td>
+						<td><%= address_fields.text_field :street %></td>
+					</tr>
+					<tr>
+						<td>Suburb:*</td>
+						<td><%= address_fields.text_field :suburb %></td>
+					</tr>
+					<% address_fields.fields_for :state, address.state do |state_fields| %>
+						<tr>
+							<td>State:*</td>
+							<td><%= select("state", "state_id", State.find(:all).collect {|s| [ s.name, s.id ] }, :select=>address.state, :include_blank=>false) %></td>
+						</tr>
+					<% end %>
+					<tr>
+						<td>Postcode:*</td>
+						<td><%= address_fields.text_field :postcode %></td>
+					</tr>
+				<% end %>
+			<% end %>
+
+			<tr>
+				<td></td>
+				<td>
+					<%= submit_tag "Save", :name=>"save" %> | 
+					<%= submit_tag "Cancel", :name=>"cancel" %>
+				</td>
+			</tr>
+		</table>
+	<% end %>

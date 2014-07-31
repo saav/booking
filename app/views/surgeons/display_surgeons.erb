@@ -1,0 +1,29 @@
+	<h3>All Surgeons</h3>
+	<table border="1">
+		<tr>
+			<th>Name</th>
+			<th>Landline</th>
+			<th>Email</th>
+			<th>Action</th>
+		</tr>
+
+		<% i = 0 %>
+		<% @surgeons.each do |surgeon| %>
+			<% css_class = get_tr_css(i) %>
+
+			<tr class="<%= css_class %>">
+				<td><%= surgeon.first_name %> <%= surgeon.last_name %></td>
+				<td><%= surgeon.landline %></td>
+				<td><%= surgeon.email %></td>
+				<td>
+					<% if session[:surgeon_surgeonID] == nil %>
+						<%= link_to "Book", :controller=>"users", :action=>"book", :id=>surgeon.id %>
+					<% else %>									
+						<%= link_to "Book", :controller=>"users", :action=>"book", :id=>surgeon.id, :disabled=>"disabled" %>
+					<% end %>
+				</td>
+			</tr>
+
+			<% i = i + 1 %>
+		<% end %>
+	</table>

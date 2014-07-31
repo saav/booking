@@ -1,0 +1,69 @@
+	<% if @surgeon != nil && !@surgeon.errors.empty? %>
+		<h3>Error:</h3>	
+		<ul class="errors">
+			<% @surgeon.errors.each do |attr, msg| %>
+				<li><%= attr %> : <%= msg %></li>	
+			<% end %>
+		</ul>	
+		<br/>	
+	<% end %>
+
+	<h3>Register as a new surgeon</h3>
+	<% form_tag :action=>"register" do %>
+		<table border="1">		
+			<tr>
+				<td>First Name:*</td>
+				<td><%= text_field :surgeon, :first_name %></td>
+			</tr>
+			<tr>
+				<td>Last Name:*</td>
+				<td><%= text_field :surgeon, :last_name %></td>
+			</tr>
+			<tr>
+				<td>Email:*</td>
+				<td><%= text_field :surgeon, :email %></td>
+			</tr>
+			<tr>
+				<td>New Password:*</td>
+				<td><%= password_field_tag :password %></td>
+			</tr>
+			<tr>
+				<td>Confirm New Password:*</td>
+				<td><%= password_field_tag :confirmation_password %></td>
+			</tr>
+			<tr>
+				<td>Street:*</td>
+				<td><%= text_field :address, :street %></td>
+			</tr>
+			<tr>
+				<td>Suburb:*</td>
+				<td><%= text_field :address, :suburb %></td>
+			</tr>
+			<tr>
+				<td>State:*</td>
+				<td><%= select("state", "state_id", State.find(:all).collect {|s| [ s.name, s.id ] }, {:prompt => 'Select a State'})
+%></td>
+			</tr>
+			<tr>
+				<td>Postcode:</td>
+				<td><%= text_field :address, :postcode %></td>
+			</tr>
+			<tr>
+				<td>Landline:</td>
+				<td><%= text_field :surgeon, :landline %></td>
+			</tr>
+			<tr>
+				<td>Mobile:</td>
+				<td><%= text_field :surgeon, :mobile %></td>
+			</tr>
+			<tr>
+				<td>Description:*</td>
+				<td><%= text_area :surgeon, :description %></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><%= submit_tag "Register", {:name=>"register"}%> - <%= submit_tag "Cancel", {:name=>"cancel"}%></td>
+			</tr>
+			
+		</table>
+	<% end %>

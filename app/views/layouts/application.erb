@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'style' %>
+  <%= stylesheet_link_tag 'calendar/blue/style' %>
+  <%= javascript_include_tag 'jquery' %>
+</head>
+<body>
+
+<div class="container">
+	<% if flash[:notice] %>
+		<p style="color: green"><%= flash[:notice] %></p>
+		<br/>
+	<% end %>
+
+	<div class="header">
+		<div class="left">
+			<ul class="no_list_style">
+				<% if !session[:user_userID].blank? %>
+					<li><%= link_to "Home", :controller=>"users", :action=>"index" %></li>
+				<% elsif !session[:surgeon_surgeonID].blank? %>
+					<li><%= link_to "Home", :controller=>"surgeons", :action=>"index" %></li>
+				<% else %>
+					<li><%= link_to "Home", :controller=>"surgeons", :action=>"display_surgeons" %></li>
+				<% end %>
+			</ul>
+		</div>
+
+		<div class="right">
+			<% if session[:universe_fullname] %>
+				<% fullname_html = "(" + session[:universe_fullname] + ")" %>
+			<% else %>
+				<% fullname_html = "" %>
+			<% end %>
+
+			<% if !session[:user_userID].blank? %>
+				<p><a href="/users/logout"><%= fullname_html %> Logout</a></p>
+			<% elsif !session[:surgeon_surgeonID].blank? %>
+				<p><a href="/users/logout"><%= fullname_html %> Logout</a></p>
+			<% else %>
+				<p><a href="/users/login">Login</a></p>
+			<% end %>
+		</div>
+	</div>
+
+	<div class="content">
+		<%= yield  %>
+		<br clear="all"/>
+	</div>
+
+	<div class="footer">
+		<p>
+			<b>Surgeon Booking System @2009</b>
+		</p>
+	</div>
+</div>
+</body>
+</html>
