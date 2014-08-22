@@ -3,6 +3,7 @@ MIT-LICENSE
 Manifest.txt
 README.txt
 Rakefile
+Gemfile
 generators/calendar_styles/calendar_styles_generator.rb
 generators/calendar_styles/templates/blue/style.css
 generators/calendar_styles/templates/grey/style.css

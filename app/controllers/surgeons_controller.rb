@@ -3,7 +3,6 @@ class SurgeonsController < ApplicationController
 		@surgeons = Surgeon.find(:all)
 	end
 	
-
 	def index
 		__check_authentication		
 

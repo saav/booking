@@ -1,2 +1,10 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+mHeal ApP
+AS a user I can
+create my account and see my bookings
+create an appointment withh my surgeon
+
+As a surgeon
+I can accept a patients booking
+Cancel the booking
+View all my bookings in calendar view
+ 

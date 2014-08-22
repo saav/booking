@@ -30,6 +30,7 @@ class MycalendarController < ApplicationController
 		@month = params[:month]
 		@day = params[:day]				
 
+
 		if @year != nil && @month != nil && @day != nil		
 			date_slug = @year + "_" + @month + "_" + @day
 			@mydate = Mydate.find(:first, :conditions=>{:date_slug=>date_slug, :surgeon_id=>surgeon_id})

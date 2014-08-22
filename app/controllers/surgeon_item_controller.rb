@@ -18,7 +18,7 @@ class SurgeonItemController < ApplicationController
 			flash[:notice] = "Something wrong to display surgeon items!"
 			redirect_to :controller=>"surgeons", :action=>"index"
 		end
-
+		
 	end
 
 	
